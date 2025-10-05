@@ -7,7 +7,7 @@ You have two choices:
 1. Predefined exe files
 2. Source code
 
-For the predefined exe files, they do not support automating: the agents will detect patterns, but will be unable to automate them and may have some GUI functionalities outdated.
+For the predefined exe files, they do not support automating and pattern detection (in some cases): only GUI is guaranteed to work properly.
 If you decide to run the source code directly, you will have access to all current functionalities.
 
 ## Running the exe files
