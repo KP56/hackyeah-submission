@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automation Suggestion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      padding: 22px;
+      margin: 0;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 24px;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 15px 19px -4px rgba(0, 0, 0, 0.1), 0 8px 8px -4px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e2e8f0;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 21px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      font-size: 27px;
+      box-shadow: 0 9px 18px rgba(102, 126, 234, 0.3);
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a202c;
+      letter-spacing: -0.025em;
+    }
+
+    .description {
+      color: #2d3748;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      padding: 21px;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      border-left: 5px solid #667eea;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .main-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      padding: 15px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.025em;
+    }
+
+    .btn-no {
+      flex: 1;
+      background: #f8fafc;
+      color: #64748b;
+      border: 2px solid #e2e8f0;
+    }
+
+    .btn-no:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e0;
+      transform: translateY(-1px);
+    }
+
+    .btn-yes {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 6px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+      background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    }
+
+    .mute-section {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding-top: 9px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .mute-section label {
+      font-size: 10px;
+      color: #4a5568;
+      white-space: nowrap;
+    }
+
+    .mute-section select {
+      flex: 1;
+      padding: 6px 9px;
+      border: 2px solid #e2e8f0;
+      border-radius: 5px;
+      font-size: 10px;
+      color: #2d3748;
+      background: white;
+      cursor: pointer;
+    }
+
+    .mute-section select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .btn-mute {
+      padding: 6px 12px;
+      background: #f7fafc;
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+      font-size: 10px;
+    }
+
+    .btn-mute:hover {
+      background: #edf2f7;
+      border-color: #cbd5e0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">✨</div>
+      <h1>Automation Suggestion</h1>
+    </div>
+    <div class="description" id="description">
+      Loading...
+    </div>
+    <div class="buttons">
+      <div class="main-buttons">
+        <button id="no-btn" class="btn-no">No, I don't want LLM to help me</button>
+        <button id="yes-btn" class="btn-yes">Yes, I want LLM to help me</button>
+      </div>
+      <div class="mute-section">
+        <label>Mute help for:</label>
+        <select id="mute-duration">
+          <option value="10">10 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="360">6 hours</option>
+        </select>
+        <button id="mute-btn" class="btn-mute">Mute</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    let currentSuggestion = null;
+
+    // Listen for suggestion from main process
+    ipcRenderer.on('set-suggestion', (event, suggestion) => {
+      currentSuggestion = suggestion;
+      const descElement = document.getElementById('description');
+      if (descElement) {
+        descElement.textContent = suggestion.pattern_description;
+      }
+    });
+
+    // Add event listeners when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
+      const muteBtn = document.getElementById('mute-btn');
+      const muteDuration = document.getElementById('mute-duration');
+
+      if (yesBtn) {
+        yesBtn.addEventListener('click', () => {
+          if (currentSuggestion) {
+            // Send accept and request to open main window
+            ipcRenderer.send('popup-accept', currentSuggestion.suggestion_id);
+            ipcRenderer.send('open-main-window-automation');
+            window.close();
+          }
+        });
+      }
+
+      if (noBtn) {
+        noBtn.addEventListener('click', () => {
+          if (currentSuggestion) {
+            ipcRenderer.send('popup-reject', currentSuggestion.suggestion_id);
+            window.close();
+          }
+        });
+      }
+
+      if (muteBtn && muteDuration) {
+        muteBtn.addEventListener('click', () => {
+          const minutes = parseInt(muteDuration.value);
+          ipcRenderer.send('popup-mute', minutes);
+          if (currentSuggestion) {
+            ipcRenderer.send('popup-reject', currentSuggestion.suggestion_id);
+          }
+          window.close();
+        });
+      }
+    });
+
+    // Handle window close (X button)
+    window.addEventListener('beforeunload', () => {
+      if (currentSuggestion) {
+        ipcRenderer.send('popup-reject', currentSuggestion.suggestion_id);
+      }
+    });
+  </script>
+</body>
+</html>
+

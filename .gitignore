@@ -1,0 +1,33 @@
+# Python cache files
+__pycache__/
+backend/data/*
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+frontend/node_modules
+.env
+backend/config.yaml
+backend/backend.log
+backend/data/action_registry.json
+
+# Executable build files
+*.exe
+*.spec
+build/
+dist/
+exe/
+backend/dist/
+backend/build/
+backend/out/
+frontend/dist/
+frontend/build/
+frontend/out/
+resources/

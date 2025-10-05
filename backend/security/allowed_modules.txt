@@ -1,0 +1,17 @@
+# Allowed modules for script execution
+os
+pathlib
+time
+shutil
+json
+csv
+datetime
+math
+random
+itertools
+collections
+functools
+operator
+re
+string
+textwrap

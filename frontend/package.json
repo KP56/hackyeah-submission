@@ -1,0 +1,84 @@
+{
+  "name": "processbot-frontend",
+  "version": "1.0.0",
+  "description": "ProcessBot Automation Assistant Frontend",
+  "author": "ProcessBot Team",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "cross-env ELECTRON_IS_DEV=1 electron .",
+    "build-electron": "npm run build && electron-builder",
+    "dev": "concurrently --kill-others-on-fail \"cross-env BROWSER=none npm start\" \"cross-env wait-on http://localhost:3000 && npm run electron-dev\"",
+    "dev:clean": "concurrently --kill-others-on-fail --kill-others \"cross-env BROWSER=none npm start\" \"cross-env wait-on http://localhost:3000 && npm run electron-dev\"",
+    "dev:windows": "concurrently --kill-others-on-fail --kill-others --handle-input \"cross-env BROWSER=none npm start\" \"cross-env wait-on http://localhost:3000 && npm run electron-dev\""
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.19",
+    "@heroicons/react": "^2.0.18",
+    "@react-spring/web": "^10.0.3",
+    "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.16",
+    "axios": "^1.6.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.18.0",
+    "js-yaml": "^4.1.0",
+    "lucide-react": "^0.294.0",
+    "postcss": "^8.4.32",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-scripts": "^5.0.1",
+    "react-spring": "^10.0.3",
+    "recharts": "^3.2.1",
+    "tailwindcss": "^3.3.6"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
+    "electron": "^38.2.1",
+    "electron-builder": "^24.6.4",
+    "wait-on": "^7.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "appId": "com.processbot.automation",
+    "productName": "ProcessBot",
+    "directories": {
+      "output": "dist",
+      "buildResources": "resources"
+    },
+    "files": [
+      "build/**/*",
+      "public/electron.js",
+      "public/preload.js",
+      "public/popup-window.html",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}

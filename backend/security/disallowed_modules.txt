@@ -1,0 +1,24 @@
+# Disallowed modules for security
+subprocess
+os.system
+os.popen
+os.spawn
+ctypes
+multiprocessing
+threading
+socket
+urllib
+requests
+http
+pickle
+marshal
+shelve
+dbm
+sqlite3
+psycopg2
+pymongo
+cryptography
+hashlib
+hmac
+tempfile
+shutil.rmtree

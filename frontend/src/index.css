@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom scrollbar - always visible */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  min-height: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Force scrollbar to always be visible */
+.overflow-y-auto {
+  scrollbar-gutter: stable;
+}
+
+/* Ensure scrollbar is always visible on hover areas */
+.hover\:overflow-y-auto:hover {
+  overflow-y: auto !important;
+}
+
+/* Always visible scrollbar class */
+.scrollbar-always-visible {
+  scrollbar-gutter: stable;
+  overflow-y: scroll !important;
+}
+
+/* Prevent scrollbar flickering during updates */
+.scrollbar-always-visible::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-always-visible::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.scrollbar-always-visible::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  min-height: 20px;
+}
+
+.scrollbar-always-visible::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth transitions - faster for better responsiveness */
+* {
+  transition: all 0.1s ease-in-out;
+}
+
+/* Focus styles */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
+  ring-offset: 2px;
+}
+
+/* Responsive layout utilities */
+@media (max-width: 768px) {
+  .sidebar-mobile-hidden {
+    transform: translateX(-100%);
+  }
+  
+  .main-content-mobile-full {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar-tablet-collapsed {
+    width: 4rem !important;
+  }
+  
+  .main-content-tablet-adjusted {
+    margin-left: 4rem !important;
+  }
+}
+
+/* Ensure sidebar maintains fixed width regardless of window size */
+.sidebar-fixed-width {
+  min-width: 4rem !important;
+  max-width: 4rem !important;
+  width: 4rem !important;
+}
+
+.sidebar-fixed-width-expanded {
+  min-width: 16rem !important;
+  max-width: 16rem !important;
+  width: 16rem !important;
+}
+
+/* Prevent sidebar from growing or shrinking */
+.sidebar-container {
+  flex-shrink: 0;
+  flex-grow: 0;
+  box-sizing: border-box;
+}
+
+/* Force sidebar to maintain exact width */
+.sidebar-container * {
+  box-sizing: border-box;
+}
+
+/* Ensure sidebar content doesn't affect width */
+.sidebar-container .flex {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Flexible container utilities */
+.flexible-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure sidebar and main content are completely separate */
+.flex {
+  display: flex;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+/* Main content area - completely independent of sidebar */
+main {
+  min-width: 0;
+  overflow: auto;
+}
+
